@@ -1,5 +1,6 @@
 const path = require('path'); //export feito pelo node 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
@@ -16,18 +17,28 @@ module.exports = {
     },
     devServer: {
         watchFiles: path.resolve(__dirname, 'public'),
+        hot: true,
     },
     plugins: [
+        isDevelopment && new ReactRefreshWebpackPlugin(),
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, 'public', 'index.html'),
         })
-    ],
+
+    ].filter(Boolean),
     module: {//determina como a aplicação se comporta nas importações pra cada tipo de arquivo.
         rules: [
             {
                 test: /\.jsx$/,//teste do tipo de arquivo que será importado.
                 exclude: /node_modules/,//exclui arquivos que já estão prontos para o browser ler se o test retornar.
-                use: 'babel-loader',//Basicamente, o babel-loader é a integração entre o babel e o webpack.
+                use: {
+                    loader: 'babel-loader',
+                    options:{
+                        plugins:[
+                            isDevelopment && require.resolve('react-refresh/babel'),
+                        ].filter(Boolean)
+                    }
+                },//Basicamente, o babel-loader é a integração entre o babel e o webpack.
 
             },
             {
