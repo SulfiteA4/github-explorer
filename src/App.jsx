@@ -1,5 +1,13 @@
 import '../styles/global.scss';
+import { Counter } from './components/Counter';
+import { RepositoryList } from './components/RepositoryList';
 
 export function App(){
-    return <h1>Hello World</h1> 
+    return (
+        <>
+            <RepositoryList />
+            <Counter />
+        </>
+        
+    );
 }
