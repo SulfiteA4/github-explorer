@@ -3,13 +3,6 @@ import { RepositoryItem } from "./RepositoryItem";
 import '../styles/repositories.scss';
 
 // https://api.github.com/orgs/rocketseat/repos
-
-const repository = {
-    name: 'unform',
-    description: 'Forms in react',
-    link: 'https://github.com/unform/unform'
-}
-
 export function RepositoryList() {
     const [repositories, setRepositories] = useState([]);// sempre que for um listagem deve-se começar o estado com um array vazio, além disso, é uma boa convenção iniciar o estado de uma variavel com o mesmo tipo de informação que vai ser armazenada.
     useEffect(()=>{
@@ -21,9 +14,12 @@ export function RepositoryList() {
         <section className="repository-list">
             <h1>Lista de repositórios</h1>
             <ul>
-                <RepositoryItem repository={repository} />
-                <RepositoryItem repository={repository} />
-                <RepositoryItem repository={repository} />
+                {
+                    repositories.map(repository => {//sempre que for necessario utilizar um map dentro do html, deve-se designar um atributo do objeto retornado como chave atraves da propriedade key
+                        return <RepositoryItem key={repository.name} repository={repository} />
+                    })
+                }
+                
             </ul>
         </section>
     );
