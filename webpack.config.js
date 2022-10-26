@@ -7,13 +7,13 @@ const isDevelopment = process.env.NODE_ENV !== 'production'
 module.exports = {
     mode: isDevelopment ? 'development' : 'production',
     devtool: isDevelopment ? 'eval-source-map' : 'source-map',
-    entry: path.resolve(__dirname, 'src', 'index.jsx'),//acessa o diretorio que esta o arquivo principal do projeto - utilizando as convenções de cada SO em relação a escrita de caminhos de diretório.Parametros: __dirname = Diretorio do arquivo que esta o webpack.config.js; e o restante são as pastas até o arquivo.
+    entry: path.resolve(__dirname, 'src', 'index.tsx'),//acessa o diretorio que esta o arquivo principal do projeto - utilizando as convenções de cada SO em relação a escrita de caminhos de diretório.Parametros: __dirname = Diretorio do arquivo que esta o webpack.config.js; e o restante são as pastas até o arquivo.
     output: {//fala qual o arquivo que sera geerado com o webpack, que é o bundle.js.
         path: path.resolve(__dirname, 'dist'),
         filename: 'bundle.js'//nesse caso, o nome do arquivo é um atributo separado do path.
     },
     resolve: {
-        extensions: ['.js', '.jsx'],//linha que determina os tipos de extensões que webpaxk pode ler.
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],//linha que determina os tipos de extensões que webpaxk pode ler.
     },
     devServer: {
         watchFiles: path.resolve(__dirname, 'public'),
@@ -29,7 +29,7 @@ module.exports = {
     module: {//determina como a aplicação se comporta nas importações pra cada tipo de arquivo.
         rules: [
             {
-                test: /\.jsx$/,//teste do tipo de arquivo que será importado.
+                test: /\.(j|t)sx$/,//teste do tipo de arquivo que será importado.
                 exclude: /node_modules/,//exclui arquivos que já estão prontos para o browser ler se o test retornar.
                 use: {
                     loader: 'babel-loader',
